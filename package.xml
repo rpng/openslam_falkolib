@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package>
+
+    <!-- Package Information -->
+    <name>falkolib</name>
+    <version>1.0.0</version>
+    <description>
+        2d LiDAR keypoints and descriptors.
+    </description>
+
+    <!-- Code Authors -->
+    <author email=""></author>
+    <maintainer email=""></maintainer>
+
+    <!-- Licensing -->
+    <license>GNU General Public License v3.0</license>
+
+    <!-- Dependencies which this package needs to build itself. -->
+    <buildtool_depend>catkin</buildtool_depend>
+

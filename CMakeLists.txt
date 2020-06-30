@@ -29,6 +29,14 @@ else(${EIGEN3_FOUND})
   message(WARNING "Cannot find Eigen3 Library")
 endif(${EIGEN3_FOUND})
 
+find_package(catkin QUIET)
+if (catkin_FOUND)
+    catkin_package(
+        INCLUDE_DIRS include
+        LIBRARIES falkolib
+    )
+endif()
+
 message(STATUS "include dir: ${falkolib_SOURCE_DIR}/include")
 message(STATUS "include dir: ${falkolib_SOURCE_DIR}/EXTERNAL")
 include_directories(${falkolib_SOURCE_DIR}/include ${falkolib_SOURCE_DIR}/EXTERNAL)  
