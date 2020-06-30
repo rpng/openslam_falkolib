@@ -9,8 +9,8 @@
     </description>
 
     <!-- Code Authors -->
-    <author email=""></author>
-    <maintainer email=""></maintainer>
+    <author email="kallasi@ce.unipr.it">Fabjan Kallasi</author>
+    <maintainer email="nmerrill@udel.edu">Nathaniel Merrill</maintainer>
 
     <!-- Licensing -->
     <license>GNU General Public License v3.0</license>
@@ -18,3 +18,4 @@
     <!-- Dependencies which this package needs to build itself. -->
     <buildtool_depend>catkin</buildtool_depend>
 
+</package>
