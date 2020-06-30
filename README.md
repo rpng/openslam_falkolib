@@ -1,9 +1,8 @@
-* FALKOLib - Fast Adaptive Laser Keypoint Orientation-invariant
-* Copyright (C) 2016 Fabjan Kallasi and Dario Lodi Rizzini.
+# FALKOLib - Fast Adaptive Laser Keypoint Orientation-invariant
+Copyright (C) 2016 Fabjan Kallasi and Dario Lodi Rizzini.
 
 
-OVERVIEW
--------------------------------------------------
+## OVERVIEW
 
 FALKOLib is a library that implements two keypoint detectors 
 and two descriptors designed for 2D LIDARs.
@@ -44,8 +43,7 @@ or the most relevant publication associated by visiting:
 http://rimlab.ce.unipr.it/
 
 
-DEPENDENCIES
--------------------------------------------------
+## DEPENDENCIES
 
 The software depends on the following external libraries
 
@@ -57,8 +55,9 @@ developed by Janez Konc (see http://www.sicmm.org/konc/),
 which has been included in folder EXTERNAL.
 
 
-HOW TO COMPILE
--------------------------------------------------
+## HOW TO COMPILE
+If you want to put falkolib in a catkin workspace, the package.xml to do so is provided.
+You can ignore these steps in thise case.
 
 Let ${falkolib_ROOT} be the install directory of your local copy 
 of library falkolib. 
@@ -90,8 +89,10 @@ Such command copies:
    ${CMAKE_INSTALL_PREFIX}/share/falkolib/
 
 
-HOW TO USE LIBRARY falkolib IN YOUR PROJECT
--------------------------------------------------
+## HOW TO USE LIBRARY falkolib IN YOUR CMAKE PROJECT
+
+If you want to put falkolib in a catkin workspace, then simply follow the tutorials to do that, 
+and ignore these steps.
 
 If library falkolib has been installed in system directory "/usr/local",
 then it is straighforward to use it in your projects.
