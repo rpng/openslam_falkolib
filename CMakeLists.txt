@@ -30,7 +30,7 @@ else(${EIGEN3_FOUND})
 endif(${EIGEN3_FOUND})
 
 if (NOT USE_CATKIN)
-    set(USE_CATKIN OFF)
+    set(USE_CATKIN ON)
 endif()
 
 if (USE_CATKIN)
