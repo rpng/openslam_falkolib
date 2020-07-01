@@ -1,0 +1,1 @@
+/usr/bin/c++  -O3 -DNDEBUG  -rdynamic CMakeFiles/testFalkoCC.dir/test/testFalkoCC.cpp.o CMakeFiles/testFalkoCC.dir/test/testData.cpp.o  -o ../bin/testFalkoCC ../lib/libfalkolib.a 

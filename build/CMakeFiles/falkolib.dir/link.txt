@@ -1,0 +1,2 @@
+/usr/bin/ar qc ../lib/libfalkolib.a  CMakeFiles/falkolib.dir/src/Common/HoughSpectrum.cpp.o CMakeFiles/falkolib.dir/src/Feature/FALKOExtractor.cpp.o CMakeFiles/falkolib.dir/src/Feature/OCExtractor.cpp.o CMakeFiles/falkolib.dir/src/Feature/CGH.cpp.o CMakeFiles/falkolib.dir/src/Feature/BSC.cpp.o
+/usr/bin/ranlib ../lib/libfalkolib.a

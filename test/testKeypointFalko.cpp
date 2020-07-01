@@ -46,10 +46,10 @@ int main(int argc, char** argv) {
 	fe.setBRatio(2.5);
 	fe.setGridSectors(16);
 
-	LaserScan scan1(-0.003316126, 2.0 * M_PI, 1440);
-	scan1.fromRanges(testRanges);
-	LaserScan scan2(-0.003316126, 2.0 * M_PI, 1440);
-	scan2.fromRanges(testRanges2);
+	LaserScan scan1(-0.003316126, 2.0 * M_PI, testRanges);
+	//scan1.fromRanges(testRanges);
+	LaserScan scan2(-0.003316126, 2.0 * M_PI, testRanges2);
+	//scan2.fromRanges(testRanges2);
 
 	std::vector<FALKO> keypoints1;
 	std::vector<FALKO> keypoints2;

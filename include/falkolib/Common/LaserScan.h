@@ -37,60 +37,96 @@ namespace falkolib {
 		 * @brief Constructor
 		 */
 		LaserScan() {
-			angleMin = 0;
-			fov = 0;
-			angleInc = 0;
-			numBeams = 0;
-			timestamp = 0;
+			//angleMin = 0;
+			//fov = 0;
+			//angleInc = 0;
+			//numBeams = 0;
+			//timestamp = 0;
 		}
 
 		/**
-		 * @brief Constructor
+		 * @brief Constructor for evenly spaced scans
 		 * @param _angleMin laser scanner start angle [rad]
 		 * @param _fov laser scanner field of view [rad]
-		 * @param _numBeams laser scanner number of beams
+		 * @param _ranges the range measurements of each scan point [meters]
 		 */
-		LaserScan(double _angleMin, double _fov, int _numBeams) {
-			angleMin = _angleMin;
-			fov = _fov;
-			angleInc = _fov / _numBeams;
-			numBeams = _numBeams;
-			timestamp = 0;
+		LaserScan(double _angleMin, double _fov, const std::vector<double>& _ranges) {
+            ranges = _ranges;
+			//angleMin = _angleMin;
+			//fov = _fov;
+			double angleInc = _fov / _ranges.size();
+            angleIncAvg = angleInc;
+			//numBeams = _numBeams;
+			//timestamp = 0;
+            points.resize(ranges.size());
+            bearings.resize(ranges.size());
+			for (size_t i = 0; i < ranges.size(); ++i) {
+				double theta = i * angleInc + _angleMin;
+                bearings[i] = theta;
+				points[i][0] = ranges[i] * std::cos(theta);
+				points[i][1] = ranges[i] * std::sin(theta);
+			}
+        
+		}
+		
+        //LaserScan(double _angleMin, double _fov, const double* _ranges, int numBeams) {
+        //    LaserScan(_angleMin, _fov, std::vector<double>(_ranges, _ranges + numBeams);
+        //}
+		
+        /**
+		 * @brief Constructor for unevenly spaced scans
+		 * @param _angleMin laser scanner start angle [rad]
+		 * @param _fov laser scanner field of view [rad]
+		 * @param _ranges the range measurements of each scan point [meters]
+		 */
+		LaserScan(const std::vector<double>& _bearings, const std::vector<double>& _ranges) {
+            ranges = _ranges;
+            bearings = _bearings;
+            points.resize(ranges.size());
+			for (size_t i = 0; i < ranges.size(); ++i) {
+				double theta = bearings[i];
+                if (i > 0) {
+                    angleIncAvg += theta - bearings[i-1];
+                }
+				points[i][0] = ranges[i] * std::cos(theta);
+				points[i][1] = ranges[i] * std::sin(theta);
+			}
+            angleIncAvg = angleIncAvg / (ranges.size() - 1);
 		}
 
 		/** @brief Set laser scanner start angle [rad] */
-		inline void setAngleMin(double _angleMin) {
-			angleMin = _angleMin;
-		};
+		//inline void setAngleMin(double _angleMin) {
+		//	angleMin = _angleMin;
+		//};
 
 		/** @brief Set laser scanner field of view [rad] */
-		inline void setLaserFoV(double _fov) {
-			fov = _fov;
-		};
+		//inline void setLaserFoV(double _fov) {
+		//	fov = _fov;
+		//};
 
 		/** @brief Set laser scanner angle increment [rad] */
-		inline void setAngleInc(double _angleInc) {
-			angleInc = _angleInc;
-		};
+		//inline void setAngleInc(double _angleInc) {
+		//	angleInc = _angleInc;
+		//};
 
 		/** @brief Set laser scanner number of beams */
-		inline void setNumBeams(int _numBeams) {
-			numBeams = _numBeams;
-		};
+		//inline void setNumBeams(int _numBeams) {
+		//	numBeams = _numBeams;
+		//};
 
 		/** @brief Set scan beginning timestamp [s] */
-		inline void setTimestamp(double _timestamp) {
-			timestamp = _timestamp;
-		};
+		//inline void setTimestamp(double _timestamp) {
+		//	timestamp = _timestamp;
+		//};
 
 		/** @brief Get laser scanner number of beams */
 		inline int getNumBeams() const {
-			return numBeams;
+			return (int)ranges.size();
 		};
 
-		/** @brief Get laser scanner angle increment [rad] */
+		/** @brief Get laser scanner angle increment (or avg increment if unevenly spaced) [rad] */
 		inline double getAngleInc() const {
-			return angleInc;
+		    return angleIncAvg;
 		};
 
 		/**
@@ -98,25 +134,25 @@ namespace falkolib {
 		 * 
 		 * @param _ranges plain array of double representing the scan ranges
 		 */
-		inline void fromRanges(const double* _ranges) {
-			fromRanges(std::vector<double>(_ranges, _ranges + numBeams));
-		}
+		//inline void fromRanges(const double* _ranges) {
+		//	fromRanges(std::vector<double>(_ranges, _ranges + numBeams));
+		//}
 
 		/**
 		 * @brief Compute scan points from ranges
 		 * 
 		 * @param _ranges std::vector of double representing the scan ranges
 		 */
-		inline void fromRanges(const std::vector<double>& _ranges) {
-			double theta;
-			ranges = _ranges;
-			points.resize(numBeams);
-			for (int i = 0; i < numBeams; ++i) {
-				theta = i * angleInc + angleMin;
-				points[i][0] = ranges[i] * std::cos(theta);
-				points[i][1] = ranges[i] * std::sin(theta);
-			}
-		}
+		//inline void fromRanges(const std::vector<double>& _ranges) {
+		//	double theta;
+		//	ranges = _ranges;
+		//	points.resize(numBeams);
+		//	for (int i = 0; i < numBeams; ++i) {
+		//		theta = i * angleInc + angleMin;
+		//		points[i][0] = ranges[i] * std::cos(theta);
+		//		points[i][1] = ranges[i] * std::sin(theta);
+		//	}
+		//}
 
 		/**
 		 * @brief compute neighborhood points list given a single point index and a search radius
@@ -125,11 +161,12 @@ namespace falkolib {
 		 * @param neigh vector of the neighborhood points
 		 * @param midIndex index representing the central point in the neigh vector
 		 */
-		void getNeighPoints(int candIndex, double radius, std::vector<Point2d>& neigh, int& midIndex) const {
+		inline void getNeighPoints(int candIndex, double radius, std::vector<Point2d>& neigh, int& midIndex) const {
 			const Point2d& candPoint = points[candIndex];
-			int alpha = std::floor(std::asin(radius / ranges[candIndex]) / angleInc);
+			//int alpha = std::floor(std::asin(radius / ranges[candIndex]) / angleInc);
+			int alpha = std::floor(std::asin(radius / ranges[candIndex]) / angleIncAvg);
 			int begIndex = std::max(0, candIndex - alpha);
-			int endIndex = std::min(candIndex + alpha + 1, numBeams);
+			int endIndex = std::min(candIndex + alpha + 1, (int)ranges.size());
 			for (int i = begIndex; i <= endIndex; ++i) {
 				if (pointsDistance(points[i], candPoint) <= radius) {
 					if (i == candIndex) {
@@ -140,16 +177,16 @@ namespace falkolib {
 			}
 		}
 
-
 		std::vector<double> ranges;
+		std::vector<double> bearings;
 		std::vector<Point2d> points;
 
-	private:
+	protected:
 
-		double angleMin;
-		double fov;
-		double angleInc;
-		int numBeams;
-		double timestamp;
+		//double angleMin;
+		//double fov;
+		double angleIncAvg;
+		//int numBeams;
+		//double timestamp;
 	};
 }

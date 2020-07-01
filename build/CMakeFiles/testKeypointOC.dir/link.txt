@@ -1,0 +1,1 @@
+/usr/bin/c++  -O3 -DNDEBUG  -rdynamic CMakeFiles/testKeypointOC.dir/test/testKeypointOC.cpp.o CMakeFiles/testKeypointOC.dir/test/testData.cpp.o  -o ../bin/testKeypointOC ../lib/libfalkolib.a 

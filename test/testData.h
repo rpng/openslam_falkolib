@@ -19,10 +19,12 @@
  */
 #pragma once
 
-extern double testRanges[];
+#include <vector>
 
-extern double testRanges2[];
+extern std::vector<double> testRanges;
 
-extern double testRangesOrtho1[];
+extern std::vector<double> testRanges2;
 
-extern double testRangesOrtho2[];
+extern std::vector<double> testRangesOrtho1;
+
+extern std::vector<double> testRangesOrtho2;

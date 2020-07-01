@@ -47,10 +47,8 @@ int main(int argc, char** argv) {
     oe.setNMSRadius(0.3);
     oe.setNeighMinPoint(2);
 
-    LaserScan scan1(-0.003316126, 2.0 * M_PI, 1440);
-    scan1.fromRanges(testRangesOrtho1);
-    LaserScan scan2(-0.003316126, 2.0 * M_PI, 1440);
-    scan2.fromRanges(testRangesOrtho2);
+    LaserScan scan1(-0.003316126, 2.0 * M_PI, testRangesOrtho1);
+    LaserScan scan2(-0.003316126, 2.0 * M_PI, testRangesOrtho2);
 
     std::vector<OC> keypoints1;
     std::vector<OC> keypoints2;
