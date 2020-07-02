@@ -46,9 +46,20 @@ int main(int argc, char** argv) {
 	fe.setBRatio(2.5);
 	fe.setGridSectors(16);
 
-	LaserScan scan1(-0.003316126, 2.0 * M_PI, testRanges);
+    std::vector<double> bearings(testRanges.size());
+    double angle_min = -0.003316126;
+    double fov = 2.0 * M_PI;
+    double incr = fov / testRanges.size();
+    for (size_t i = 0; i < testRanges.size(); i++) {
+        bearings[i] = incr * i + angle_min;
+    }
+
+	//LaserScan scan1(-0.003316126, 2.0 * M_PI, testRanges);
+	LaserScan scan1(bearings, testRanges);
+
 	//scan1.fromRanges(testRanges);
-	LaserScan scan2(-0.003316126, 2.0 * M_PI, testRanges2);
+	//LaserScan scan2(angle_min, fov, testRanges2);
+	LaserScan scan2(bearings, testRanges2);
 	//scan2.fromRanges(testRanges2);
 
 	std::vector<FALKO> keypoints1;

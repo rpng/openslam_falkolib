@@ -29,10 +29,8 @@ else(${EIGEN3_FOUND})
   message(WARNING "Cannot find Eigen3 Library")
 endif(${EIGEN3_FOUND})
 
-if (NOT USE_CATKIN)
-    set(USE_CATKIN ON)
-endif()
-
+option(USE_CATKIN "USE_CATKIN" ON)
+message(STATUS "USE_CATKIN: ${USE_CATKIN}")
 if (USE_CATKIN)
     find_package(catkin QUIET)
     if (catkin_FOUND)

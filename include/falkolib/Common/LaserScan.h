@@ -80,18 +80,24 @@ namespace falkolib {
 		 * @param _ranges the range measurements of each scan point [meters]
 		 */
 		LaserScan(const std::vector<double>& _bearings, const std::vector<double>& _ranges) {
+            assert(_bearings.size() == _ranges.size());
             ranges = _ranges;
             bearings = _bearings;
             points.resize(ranges.size());
+            double angle_max = -1;
+            double angle_min = -1;
 			for (size_t i = 0; i < ranges.size(); ++i) {
 				double theta = bearings[i];
                 if (i > 0) {
-                    angleIncAvg += theta - bearings[i-1];
+                    angle_max = std::max(angle_max, theta);
+                    angle_min = std::min(angle_min, theta);
+                } else {
+                    angle_max = angle_min = theta;
                 }
 				points[i][0] = ranges[i] * std::cos(theta);
 				points[i][1] = ranges[i] * std::sin(theta);
 			}
-            angleIncAvg = angleIncAvg / (ranges.size() - 1);
+            angleIncAvg = (angle_max - angle_min) / (ranges.size() - 1);
 		}
 
 		/** @brief Set laser scanner start angle [rad] */
